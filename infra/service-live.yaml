@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: quote-service-live
+  name: quote-service-live
+spec:
+  ports:
+  - port: 65080
+    protocol: TCP
+    targetPort: 65080
+  selector:
+    app: quote-blue
+status:
+  loadBalancer: {}

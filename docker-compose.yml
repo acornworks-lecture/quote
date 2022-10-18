@@ -1,0 +1,32 @@
+version: "3.6"
+services:
+  quote:
+    build: .
+    ports:
+      - "65080:65080"
+  jaeger:
+    image: jaegertracing/all-in-one:1.37
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+      SPAN_STORAGE_TYPE: "elasticsearch"
+      ES_SERVER_URLS: "http://elasticsearch:9200"
+    volumes:
+    - "./configurations/jaeger-ui.json:/etc/jaeger-jaeger-ui.json"
+    command: --query.ui-config /etc/jaeger-jaeger-ui.json
+    ports:
+    - "14250:14250"
+    - "14268:14268"
+    - "16686:16686"
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.6
+    ports:
+    - "127.0.0.1:9200:9200"
+    - "127.0.0.1:9300:9300"
+    environment:
+      "discovery.type": "single-node"
+      "http.host": "0.0.0.0"
+      "transport.host": "127.0.0.1"
+      "xpack.security.enabled": "false"

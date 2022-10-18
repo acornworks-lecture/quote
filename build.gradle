@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.3'
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'java'
+	id 'jacoco'
+}
+
+group = 'com.acornworks'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'io.opentelemetry:opentelemetry-api-trace:0.13.1'
+	implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+test {
+	finalizedBy jacocoTestCoverageVerification // verification is always performed after tests run
+}
+
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+}
+
+jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport	// report is generated before check a verification
+
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.85
+			}
+		}
+	}
+}
+

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: quote-blue
+  name: quote-blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote-blue
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: quote-blue
+    spec:
+      containers:
+      - image:  k830206/lecture-quote:latest
+        name: quote
+        ports:
+        - containerPort: 65080
+        env:
+          - name: ENV_COLOR
+            value: BLUE
+        resources: {}
+status: {}
