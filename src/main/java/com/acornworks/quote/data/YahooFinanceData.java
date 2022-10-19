@@ -28,6 +28,11 @@ public class YahooFinanceData {
         logger.info("Calling URL: {}", url);
 
         final JsonNode rootNode = restTemplate.getForObject(url, JsonNode.class);
+
+        if (rootNode == null) {
+            throw new NullPointerException(url);
+        }
+
         final JsonNode resultNode = rootNode.get("optionChain").get("result").get(0);
 
         final BigDecimal price = BigDecimal.valueOf(resultNode.get("quote").get("regularMarketPrice").asDouble());

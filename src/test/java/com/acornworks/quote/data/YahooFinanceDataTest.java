@@ -1,6 +1,5 @@
 package com.acornworks.quote.data;
 
-import com.acornworks.quote.calculations.RatioCalculation;
 import com.acornworks.quote.objects.SpotData;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

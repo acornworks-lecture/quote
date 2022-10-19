@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: quote-{{ .Values.idleService | replace "." "-" }}
+  name: quote-{{ .Values.idleService | replace "." "-" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote-{{ .Values.idleService | replace "." "-" }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: quote-{{ .Values.idleService | replace "." "-" }}
+    spec:
+      containers:
+      - image: {{ .Values.dockerAccount }}/lecture-quote:{{ .Values.idleService }}
+        name: quote
+        ports:
+        - containerPort: 65080
+        env:
+          - name: ENV_COLOR
+            value: BLUE
+        resources: {}
+status: {}
