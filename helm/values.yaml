@@ -1,3 +1,4 @@
 liveService: 1.0.0
-idleService: 1.0.0
+idleService: 1.0.1
+targetService: 1.0.0
 dockerAccount: k830206
