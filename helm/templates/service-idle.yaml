@@ -3,14 +3,14 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: quote-service
-  name: quote-service
+    app: quote-service-idle
+  name: quote-service-idle
 spec:
   ports:
   - port: 65080
     protocol: TCP
     targetPort: 65080
   selector:
-    app: quote-{{ .Values.liveService | replace "." "-" }}
+    app: quote-{{ .Values.idleService | replace "." "-" }}
 status:
   loadBalancer: {}
