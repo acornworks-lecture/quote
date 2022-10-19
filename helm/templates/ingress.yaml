@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.liveService | replace "." "-" }}
+            name: quote-service-{{ .Values.liveService | replace "." "-" }}
             port:
               number: 65080
