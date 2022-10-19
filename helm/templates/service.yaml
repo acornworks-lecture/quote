@@ -12,5 +12,6 @@ spec:
     targetPort: 65080
   selector:
     app: quote-{{ .Values.targetService | replace "." "-" }}
+  type: LoadBalancer
 status:
   loadBalancer: {}
