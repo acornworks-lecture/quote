@@ -11,6 +11,6 @@ spec:
     protocol: TCP
     targetPort: 65080
   selector:
-    app: quote-{{ .Values.liveService | replace "." "-" }}
+    app: quote-{{ .Values.targetService | replace "." "-" }}
 status:
   loadBalancer: {}
