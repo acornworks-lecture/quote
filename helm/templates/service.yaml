@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "quote.fullname" . }}
+  creationTimestamp: null
   labels:
-    {{- include "quote.labels" . | nindent 4 }}
+    app: quote-service-{{ .Values.idleService | replace "." "-" }}
+  name: quote-service-{{ .Values.idleService | replace "." "-" }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port: 65080
+    protocol: TCP
+    targetPort: 65080
   selector:
-    {{- include "quote.selectorLabels" . | nindent 4 }}
+    app: quote-service-{{ .Values.idleService | replace "." "-" }}
+status:
+  loadBalancer: {}
