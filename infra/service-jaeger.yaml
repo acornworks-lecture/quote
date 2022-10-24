@@ -1,29 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: jaeger-service
   name: jaeger
-spec:
-  ports:
-  - name: frontend
-    port: 16686
-    protocol: TCP
-    targetPort: 16686
-  selector:
-    app: jaeger
-  type: LoadBalancer
-status:
-  loadBalancer: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  labels:
-    app: jaeger-internal-service
-  name: jaeger-internal
 spec:
   ports:
   - name: collector
@@ -34,8 +14,12 @@ spec:
     port: 14268
     protocol: TCP
     targetPort: 14268
+  - name: frontend
+    port: 16686
+    protocol: TCP
+    targetPort: 16686
   selector:
     app: jaeger
-  type: NodePort
+  type: LoadBalancer
 status:
   loadBalancer: {}

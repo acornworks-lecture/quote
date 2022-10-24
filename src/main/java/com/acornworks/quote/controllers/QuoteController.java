@@ -5,6 +5,7 @@ import com.acornworks.quote.data.YahooFinanceData;
 import com.acornworks.quote.featuretoggle.FlagData;
 import com.acornworks.quote.objects.SpotData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,13 @@ public class QuoteController {
     @Autowired
     private RatioCalculation ratioCalculation;
 
+    @CrossOrigin
     @GetMapping(value = "/{symbol}", produces = "application/json")
     public SpotData getPrice(@PathVariable("symbol") String symbol) {
         return yahooFinanceData.getPrice(symbol);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/ratio/{symbol}", produces = "application/json")
     public Map<String, Double> getRatio(@PathVariable("symbol") String symbol) {
         final Map<String, Double> rtnMap = new HashMap<>();
