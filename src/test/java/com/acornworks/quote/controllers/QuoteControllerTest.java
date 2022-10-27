@@ -22,10 +22,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = QuoteController.class)
-public class QuoteControllerTest {
+class QuoteControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -52,12 +55,12 @@ public class QuoteControllerTest {
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        Assertions.assertEquals(result.getResponse().getStatus(), 200);
+        Assertions.assertEquals(200, result.getResponse().getStatus());
 
         final JsonNode resultNode = objectMapper.readTree(result.getResponse().getContentAsString());
 
-        Assertions.assertEquals(resultNode.get("ticker").asText(), "AUDKRW=X");
-        Assertions.assertEquals(resultNode.get("price").asDouble(), 900.0d);
+        Assertions.assertEquals("AUDKRW=X", resultNode.get("ticker").asText());
+        Assertions.assertEquals(900.0d, resultNode.get("price").asDouble());
         Assertions.assertNotNull(resultNode.get("timestamp"));
     }
 
@@ -70,10 +73,34 @@ public class QuoteControllerTest {
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        Assertions.assertEquals(result.getResponse().getStatus(), 200);
+        Assertions.assertEquals(200, result.getResponse().getStatus());
 
         final JsonNode resultNode = objectMapper.readTree(result.getResponse().getContentAsString());
 
-        Assertions.assertEquals(resultNode.get("ratio").asDouble(), 0.01d);
+        Assertions.assertEquals(0.01d, resultNode.get("ratio").asDouble());
     }
+
+    @Test
+    void testGetEngineKey() throws Exception {
+        Map<String, Boolean> scenarioMap = new HashMap<>();
+
+        scenarioMap.put("NewKey0001", true);
+        scenarioMap.put("OldKey0001", false);
+
+        for (Entry<String, Boolean> entry : scenarioMap.entrySet()) {
+            Mockito.when(flagData.isShowNewFeature()).thenReturn(entry.getValue());
+
+            RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/quote/engine")
+                    .accept(MediaType.APPLICATION_JSON);
+    
+            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+    
+            Assertions.assertEquals(200, result.getResponse().getStatus());
+    
+            final JsonNode resultNode = objectMapper.readTree(result.getResponse().getContentAsString());
+    
+            Assertions.assertEquals(resultNode.get("EngineKey").asText(), entry.getKey());
+        }
+    }
+
 }

@@ -1,0 +1,31 @@
+{
+  "imposters": [
+    {
+      "port": 3000,
+      "protocol": "http",
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "startsWith": { "path": "/v7/finance/options" }
+            }
+          ],
+          "responses": [
+            {
+              "proxy": {
+                "to": "https://query2.finance.yahoo.com",
+                "mode": "proxyOnce",
+                "predicateGenerators": [{
+                  "matches": {
+                    "path": true
+                  }
+                }]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

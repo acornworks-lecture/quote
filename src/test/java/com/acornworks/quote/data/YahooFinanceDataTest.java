@@ -19,7 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @ExtendWith(MockitoExtension.class)
-public class YahooFinanceDataTest {
+class YahooFinanceDataTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Mock
