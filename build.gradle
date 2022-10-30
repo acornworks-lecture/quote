@@ -46,3 +46,15 @@ jacocoTestCoverageVerification {
 		}
 	}
 }
+
+// Download opentelemetry-javaagent.jar into lib folder
+// https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+// bootRun  {
+// 	jvmArgs = [
+// 		"--javaagent:lib/opentelemetry-javaagent.jar",
+// 		"-Dotel.resource.attributes=service.name=quote",
+// 		"-Dotel.propagators=jaeger",
+// 		"-Dotel.traces.exporter=jaeger",
+// 		"-Dotel.exporter.jaeger.endpoint=http://localhost:14250"
+// 	]
+// }
